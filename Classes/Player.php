@@ -7,7 +7,8 @@ class Player {
     private bool $lost = false;
 
     public  function __construct(Deck $deck) {
-
+        $this->lost = false;
+        $this->cards = [];
      for ($i = 0; $i < 2; $i++) {
          $this->cards[]=$deck->drawCard();
      }
@@ -19,8 +20,8 @@ class Player {
 
 
 
-    public function hit() {
-
+    public function hit($deck) {
+        $this->cards = $deck->drawCard();
         if ($this->getScore()> 21) {
             $this->lost= true;
         }
@@ -31,12 +32,14 @@ class Player {
 
     }
 
-    public function getScore() {
+    public function getScore(): int
+    {
         $score = 0;
         $cards = $this->cards;
         foreach ($cards as $card) {
             $score += $card->getValue();
         }
+        return $score;
 
     }
 
@@ -46,5 +49,15 @@ class Player {
         return $this->lost;
     }
 
-
 }
+
+class Dealer extends Player {
+         public function hit ($deck) :void {
+        if ($this->getScore()<=15) {
+            parent::hit($deck);
+        }
+   }
+}
+
+
+
