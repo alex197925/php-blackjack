@@ -53,7 +53,7 @@ class Player {
 
 class Dealer extends Player {
          public function hit ($deck) :void {
-        if ($this->getScore()<=15) {
+        if ($this->getScore() < 15) {
             parent::hit($deck);
         }
    }
